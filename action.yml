@@ -1,0 +1,20 @@
+name: 'ParkHub Release Rebase'
+description: 'Rebases a branch onto a Git ref using the recursive, ours strategy.'
+inputs:
+  github_token:
+    description: 'Token to authenticate with GitHub'
+    required: true
+    default: ${{ github.token }}
+  base_ref:
+    description: 'Git ref that you are rebasing the head_branch on top of.'
+    required: true
+    default: ${{ github.ref }}
+  head_branch:
+    description: 'Branch you are rebasing, to be rebased on top of the base_ref.'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.base_ref }}
+    - ${{ inputs.head_branch }}
