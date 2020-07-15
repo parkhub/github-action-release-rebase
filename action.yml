@@ -9,12 +9,15 @@ inputs:
     description: 'Git ref that you are rebasing the head_branch on top of.'
     required: true
     default: ${{ github.ref }}
-  head_branch:
-    description: 'Branch you are rebasing, to be rebased on top of the base_ref.'
+  head_branches:
+    description: 'Branches you are rebasing, to be rebased on top of the base_ref.'
     required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.base_ref }}
-    - ${{ inputs.head_branch }}
+    - ${{ inputs.head_branches }}
+branding:
+  icon: 'git-rebase'
+  color: 'orange'

@@ -23,15 +23,15 @@ if [[ -n "${SSH_PRIVATE_KEY}" ]]; then
 fi
 
 BASE_REF=$1
-HEAD_BRANCH=$2
+HEAD_BRANCHES=$2
 
 if [[ -z "${BASE_REF}" ]]; then
   echo "Missing \$BASE_REF"
   exit 1
 fi
 
-if [[ -z "${HEAD_BRANCH}" ]]; then
-  echo "Missing \$HEAD_BRANCH"
+if [[ -z "${HEAD_BRANCHES}" ]]; then
+  echo "Missing \$HEAD_BRANCHES"
   exit 1
 fi
 
@@ -42,7 +42,7 @@ else
 fi
 
 echo "BASE_REF=${BASE_REF}"
-echo "HEAD_BRANCH=${HEAD_BRANCH}"
+echo "HEAD_BRANCHES=${HEAD_BRANCHES}"
 
 mkdir _tmp && cd _tmp
 git init
@@ -57,5 +57,10 @@ git remote -v
 git remote update
 
 # See https://git-scm.com/docs/git-rebase for options documentation
-git rebase --autosquash --autostash -s recursive -X ours "${BASE_REF}" "${HEAD_BRANCH}"
-git push --force origin "${HEAD_BRANCH}"
+for branch in ${HEAD_BRANCHES}; do
+git rebase --autosquash --autostash -s recursive -X ours \
+	"origin/${BASE_REF}" "origin/${branch}"
+git push --force origin "HEAD:${branch}"
+done
+
+exit 0

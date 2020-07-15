@@ -23,21 +23,15 @@ jobs:
   rebase_branches:
     runs-on: ubuntu-latest
     steps:
-      - name: Rebase develop on master
+      - name: Check out action code
+        uses: actions/checkout@v1
+      - name: Rebase dev/test branches on master
         uses: parkhub/github-action-release-rebase@main
         with:
-          head_branch: develop
           base_ref: master
-      - name: Rebase qa on master
-        uses: parkhub/github-action-release-rebase@main
-        with:
-          head_branch: qa
-          base_ref: master
-      - name: Rebase staging on master
-        uses: parkhub/github-action-release-rebase@main
-        with:
-          head_branch: staging
-          base_ref: master
+          head_branches: develop qa staging
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 Requirements
@@ -45,10 +39,11 @@ Requirements
 
 - `base_ref` must be a valid branch, tag, or commit (the git ref deployed to
 	production) in the GitHub repository
-* `head_branch` must be an existing branch in the GitHub repository
+* `head_branches` must be existing branches in the GitHub repository to rebase
 
 Acknowledgements
 ----------------
 
 This action is based on [Local Git
-Rebase](https://github.com/marketplace/actions/local-git-rebase).
+Rebase](https://github.com/marketplace/actions/local-git-rebase) and [Cirrus
+Actions Rebase](https://github.com/marketplace/actions/automatic-rebase).
