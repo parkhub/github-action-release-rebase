@@ -14,24 +14,27 @@ Usage Example
 
 ```yaml
 name: Rebase On Release
+
 on:
   push:
     branches:
       # All pushes to this branch will trigger the task.
       - master
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   rebase_branches:
     runs-on: ubuntu-latest
     steps:
       - name: Check out action code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Rebase dev/test branches on master
         uses: parkhub/github-action-release-rebase@main
         with:
           base_ref: master
           head_branches: develop qa staging
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 Requirements
