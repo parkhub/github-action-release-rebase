@@ -1,13 +1,12 @@
 ParkHub Release Rebase
 ======================
 
-GitHub action to rebase lower environment branches using the recursive, ours
+GitHub action to rebase lower environment branches using the recursive, patience
 strategy when the main branch is updated. Use this action to rebase development
 and testing branches after a release to make sure that new work includes code
 from the latest release and any hotfixes since the latest release.
 
-The recursive, ours strategy will resolve merge conflicts by choosing the
-changes from the source ref and discarding the changes from the head branch.
+The recursive, patience strategy will pend extra time to avoid merge conflicts.
 
 Usage Example
 -------------
